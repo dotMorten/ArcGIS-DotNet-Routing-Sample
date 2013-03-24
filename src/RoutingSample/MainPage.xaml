@@ -1,0 +1,87 @@
+﻿<Page
+    x:Class="RoutingSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RoutingSample"
+	xmlns:esri="using:ESRI.ArcGIS.Runtime.Xaml"
+	xmlns:symbology="using:ESRI.ArcGIS.Runtime.Symbology"
+	xmlns:vm="using:RoutingSample.ViewModels">
+	<Page.Resources>
+		<vm:MainPageVM x:Key="viewmodel" />
+	</Page.Resources>
+	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+			  DataContext="{StaticResource viewmodel}"
+		  Width="1024" Height="768"
+		  >
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="320"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!--SidePanel-->
+		<StackPanel Margin="20">
+				<!--Create Route Panel-->
+				<StackPanel>
+					<TextBlock Text="Enter address:" />
+					<TextBox Text="{Binding RouteToAddress, Mode=TwoWay}" />
+					
+					<ProgressBar IsIndeterminate="{Binding IsCalculatingRoute}" />
+					<TextBlock Text="{Binding RouteCalculationErrorMessage}" Foreground="Red" FontWeight="Bold" />
+				</StackPanel>
+			
+							<!--Route Details Panel-->
+				<StackPanel >
+					
+					<TextBlock Text="{Binding Route.NextManeuver}" FontSize="24" />
+					
+					<TextBlock Text="Time to waypoint:" />
+					<TextBlock Text="{Binding Route.TimeToWaypoint}" FontSize="24" />
+					
+					<TextBlock Text="Distance to waypoint:" />
+					<TextBlock Text="{Binding Route.MilesToWaypoint}" FontSize="24" />
+						
+					<TextBlock Text="Time to destination:" />
+					<TextBlock Text="{Binding Route.TimeToDestination}" FontSize="24" />
+					
+					<TextBlock Text="Distance to destination" />
+					<TextBlock Text="{Binding Route.MilesToDestination}" FontSize="24" />
+				
+				<Image Source="{Binding Route.ManeuverImage}" HorizontalAlignment="Center" Width="50" />
+				</StackPanel>
+
+		</StackPanel>
+
+		<Grid x:Uid="MapPanel" Grid.Column="1" >
+			
+			<esri:Map LocationDisplaySettings="{Binding LocationDisplay}"
+					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
+
+				<esri:ArcGISTiledMapServiceLayer
+					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
+
+								<esri:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
+					<esri:GraphicsLayer.Renderer>
+						<symbology:SimpleRenderer>
+							<symbology:SimpleMarkerSymbol Size="20" Color="Transparent" >
+								<symbology:SimpleMarkerSymbol.Outline>
+									<symbology:SimpleLineSymbol Color="Green" Width="5" />
+								</symbology:SimpleMarkerSymbol.Outline>
+							</symbology:SimpleMarkerSymbol>
+						</symbology:SimpleRenderer>
+					</esri:GraphicsLayer.Renderer>
+				</esri:GraphicsLayer>
+
+				<esri:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
+					<esri:GraphicsLayer.Renderer>
+						<symbology:SimpleRenderer>
+							<symbology:SimpleLineSymbol Width="10" Color="#99A0A0FF" />
+						</symbology:SimpleRenderer>
+					</esri:GraphicsLayer.Renderer>
+				</esri:GraphicsLayer>
+
+			</esri:Map>
+		</Grid>
+
+	</Grid>
+</Page>

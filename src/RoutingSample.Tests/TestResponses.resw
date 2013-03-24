@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="GetLocationRedlands" xml:space="preserve">
+    <value>{"spatialReference":{"wkid":4326,"latestWkid":4326},"locations":[{"name":"Redlands, California, United States","extent":{"xmin":-117.250005,"ymin":34.003849000000002,"xmax":-117.053984,"ymax":34.101897999999998},"feature":{"geometry":{"x":-117.18253721699972,"y":34.055566969000438},"attributes":{"Score":100,"Addr_Type":"POI"}}}]}</value>
+  </data>
+  <data name="RouteFrom1172_34ToRedlandsCA" xml:space="preserve">
+    <value>{"directions":[{"routeId":1,"routeName":"Location 1 - Location 2","summary":{"totalLength":21166.5173711697,"totalTime":18.6,"totalDriveTime":18.6000370616093,"envelope":{"xmin":-117.22639,"ymin":34.0000000000001,"xmax":-117.165199,"ymax":34.122722804878,"spatialReference":{"wkid":4326}}},"features":[{"attributes":{"length":0,"time":0,"text":"Start at Location 1","ETA":-2209161600000,"maneuverType":"esriDMTDepart"},"compressedGeometry":"+1m91-66nvt+1ps88+0+0"},{"attributes":{"length":123.742223149612,"time":0.767894700169563,"text":"Go southwest on Morena Villa Dr toward Isabella Villa Ct","ETA":-2209161600000,"maneuverType":"esriDMTStraight"},"compressedGeometry":"+1m91-66nvt+1ps88-s-s-c-9-f-2"},{"attributes":{"length":100.999996727332,"time":0.629563331604004,"text":"Turn left on Club View Dr","ETA":-2209161600000,"maneuverType":"esriDMTTurnLeft"},"compressedGeometry":"+1m91-66o1k+1ps71+1-1j"},{"attributes":{"length":1895.00002324238,"time":1.92572957277298,"text":"Turn right on Base Line Rd (Baseline St)","ETA":-2209161600000,"maneuverType":"esriDMTTurnRight"},"compressedGeometry":"+1m91-66o1j+1ps5e-70+1-5j+3-d-3-mm+5"},{"attributes":{"length":1346.99999581228,"time":1.22487803269178,"text":"Continue on Base Line (E Baseline Rd)","ETA":-2209161600000,"maneuverType":"esriDMTStraight"},"compressedGeometry":"+1m91-66p59+1ps5k-pc+1"},{"attributes":{"length":5382.9999745667,"time":2.88461548089981,"text":"Turn left onto ramp and go on CA-210 E toward Redlands","ETA":-2209161600000,"maneuverType":"esriDMTTurnLeft"},"compressedGeometry":"+1m91-66pul+1ps5l-1-h+d-1d+7-11+c-2n+7-r+7-1l+7-11+1o-73+7-12+b-2p+5-1v+0-v-1-1m-5-1p-1h-bo-h-4p-5-1o-9-4b-2-2h-3-8o-4-n5"},{"attributes":{"length":2367.24109683207,"time":1.59600710123777,"text":"Take ramp on the right and go on I-10 W toward Los Angeles","ETA":-2209161600000,"maneuverType":"esriDMTRampRight"},"compressedGeometry":"+1m91-66pth+1ppi1-a-2g-f-2g-n-27-b-n-d-i-g-f-i-f-l-c-n-9-h-5-i-4-14-3-6p-a-3l-2-2d-5-fm+0"},{"attributes":{"length":454.999992735982,"time":0.413853660225868,"text":"At exit 76 take ramp on the right to California Street","ETA":-2209161600000,"maneuverType":"esriDMTRampRight"},"compressedGeometry":"+1m91-66r0v+1pp71-1i+7-70+a"},{"attributes":{"length":444.000008406937,"time":0.403756119310856,"text":"Turn left on California St","ETA":-2209161600000,"maneuverType":"esriDMTTurnLeft"},"compressedGeometry":"+1m91-66r9h+1pp7i+4-6u"},{"attributes":{"length":24.0000000088382,"time":0.0286451615393162,"text":"Turn right on Redlands Blvd","ETA":-2209161600000,"maneuverType":"esriDMTTurnRight"},"compressedGeometry":"+1m91-66r9d+1pp0k-f+0"},{"attributes":{"length":1656.99997207046,"time":1.50629270076752,"text":"Turn left on California St","ETA":-2209161600000,"maneuverType":"esriDMTTurnLeft"},"compressedGeometry":"+1m91-66r9s+1pp0k+7-j+3-g+3-ls-2-18-6-p-4-q"},{"attributes":{"length":695.99998077184,"time":0.471599996089935,"text":"Turn left on Barton Rd","ETA":-2209161600000,"maneuverType":"esriDMTTurnLeft"},"compressedGeometry":"+1m91-66r9r+1po6q+27-2+as+4"},{"attributes":{"length":5669.53413320427,"time":4.96438074111938,"text":"Turn right on San Timoteo Canyon Rd","ETA":-2209161600000,"maneuverType":"esriDMTTurnRight"},"compressedGeometry":"+1m91-66qso+1po6s+1-t+a-r+m-p+19-1b+6-8+1-5+2-1s+0-3h+2-b+4-4+d-2+5p+0+r-2+b-3+8-6+5-8+2c-4r+9-a+p-j+1q-1s+9-c+5-9+m-1l+m-11+4-g+3-n+0-13+6-51+3-j+2-7+8-b+6-7+a5-81+1f-13+13-o+r-g+19-k+1l-l+o-c+dc-7f+u-k+v-n+1e-s+1r-16+l-h+3u-3i+a-a+7-a+4-a+a-1i+5-9+8-8+2s-24"},{"attributes":{"length":1003.99997364104,"time":1.78282046318054,"text":"Turn right on Smiley Blvd (Lisa Marie Ln)","ETA":-2209161600000,"maneuverType":"esriDMTTurnRight"},"compressedGeometry":"+1m91-66otf+1pm87-33-30-e-h-13-14-8-b-12-1r-a-18-m-1u-6-p-1-a+4-g+13-23"},{"attributes":{"length":0,"time":0,"text":"Finish at Location 2, on the left","ETA":-2209161600000,"maneuverType":"esriDMTStop"},"compressedGeometry":"+1m91-66p3d+1plqg+0+0"}]}],"routes":{"spatialReference":{"wkid":4326},"features":[{"attributes":{"ObjectID":1,"Name":"Location 1 - Location 2","FirstStopID":1,"LastStopID":2,"StopCount":2,"Total_Time":18.6000370616093,"Shape_Length":0.200901567319668},"geometry":{"paths":[[[-117.165383756,34.122722805],[-117.16611,34.1220700000001],[-117.16637,34.1220300000001],[-117.16635,34.1211200000001],[-117.17039,34.1211300000001],[-117.17385,34.1211300000001],[-117.1824,34.12118],[-117.1869,34.1212200000001],[-117.19544,34.12123],[-117.19562,34.12123],[-117.20002,34.12123],[-117.20152,34.12123],[-117.20083,34.11747],[-117.1994,34.1109500000001],[-117.19942,34.1047300000001],[-117.20082,34.0811800000001],[-117.20085,34.0776500000001],[-117.20087,34.0731000000001],[-117.20131,34.07021],[-117.21223,34.06676],[-117.21394,34.06676],[-117.21394,34.06676],[-117.22127,34.06676],[-117.22398,34.0669600000001],[-117.22619,34.06706],[-117.22618,34.06618],[-117.22613,34.06307],[-117.22639,34.06307],[-117.22637,34.0482200000001],[-117.21883,34.0482500000001],[-117.20855,34.0340600000001],[-117.182409994,34.0121799950001],[-117.18241,34.0121800000001],[-117.18582,34.00429]]]}}]},"stops":{"spatialReference":{"wkid":4326},"features":[{"attributes":{"ObjectID":1,"Name":"Location 1","RouteName" : null,"Sequence":1,"TimeWindowStart" : null,"TimeWindowEnd" : null,"ArriveCurbApproach" : null,"DepartCurbApproach":2,"SourceID":0,"SourceOID":2179290,"PosAlong":0.890555523703675,"SideOfEdge":1,"CurbApproach":0,"Status":0,"Attr_Length":0,"Attr_Time":0,"Cumul_Time":0},"geometry":{"x":-117.165199,"y":34.122575}},{"attributes":{"ObjectID":2,"Name":"Location 2","RouteName" : null,"Sequence":2,"TimeWindowStart" : null,"TimeWindowEnd" : null,"ArriveCurbApproach":2,"DepartCurbApproach" : null,"SourceID":0,"SourceOID":2167385,"PosAlong":0,"SideOfEdge":1,"CurbApproach":0,"Status":0,"Attr_Length":0,"Attr_Time":0,"Cumul_Time":18.6000370616093},"geometry":{"x":-117.18,"y":34.0000000000001}}]},"messages":[]}</value>
+  </data>
+</root>
