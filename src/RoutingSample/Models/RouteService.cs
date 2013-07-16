@@ -1,15 +1,15 @@
-﻿using ESRI.ArcGIS.Runtime;
-using ESRI.ArcGIS.Runtime.ArcGISServices;
-using ESRI.ArcGIS.Runtime.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NETFX_CORE
 using System.Net.Http;
-#endif
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Esri.ArcGISRuntime.Tasks.NetworkAnalyst;
+using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Tasks.Geocoding;
+using Esri.ArcGISRuntime.Layers;
+using Esri.ArcGISRuntime.Http;
 
 namespace RoutingSample.Models
 {
@@ -35,14 +35,9 @@ namespace RoutingSample.Models
 		public async Task<MapPoint> Geocode(string address, CancellationToken cancellationToken)
 		{
 			Locator locator = new Locator(new Uri(locatorService))
-#if NETFX_CORE //We currently don't have this in Windows Phone yet
-				 { HttpMessageHandler = messageHandler }
-#endif
-			;
-			var result = await locator.FindAsync(new LocatorFindParameter()
-			{
-				Text = address
-			}, cancellationToken).ConfigureAwait(false);
+				 { HttpMessageHandler = messageHandler };
+			var result = await locator.FindAsync(new LocatorFindParameter(address),
+				cancellationToken).ConfigureAwait(false);
 			if (result.Locations != null && result.Locations.Count > 0)
 				return result.Locations.First().Feature.Geometry as MapPoint;
 			return null;
@@ -67,26 +62,21 @@ namespace RoutingSample.Models
 				throw new ArgumentException("Not enough stops");
 
 			//determine which route service to use. Long distance routes should use the long-route service
-			Polyline line = new Polyline() { SpatialReference = SpatialReference.Wgs84 };
-			line.AddPart(stops);
+			Polyline line = new Polyline() { SpatialReference = SpatialReferences.Wgs84 };
+			line.Paths.AddPart(stops.Select(m => m.Coordinate));
 			var length = GeometryEngine.GeodesicLength(line);
 			string svc = routeService;
 			if (length > 200000)
 				svc = longRouteService;
 
 			//Calculate route
-			RouteTask task = new RouteTask(new Uri(svc)) 
-#if NETFX_CORE //We currently don't have this in Windows Phone yet
-			{ HttpMessageHandler = messageHandler }
-#endif
-			;
-			return task.SolveAsync(new RouteParameter()
+			RouteTask task = new RouteTask(new Uri(svc)) { HttpMessageHandler = messageHandler };
+			return task.SolveAsync(new RouteParameter(new FeatureStops(stopList))
 			{
-				Stops = new ESRI.ArcGIS.Runtime.Tasks.FeatureStops(stopList),
 				OutputLines = OutputLine.TrueShapeWithMeasure,
-				OutSpatialReference = SpatialReference.Wgs84,
+				OutSpatialReference = SpatialReferences.Wgs84,
 				ReturnStops = true,
-				DirectionsLengthUnits = MapUnit.Meters,
+				DirectionsLengthUnits = Esri.ArcGISRuntime.ArcGISServices.MapUnit.Meters ,
 				UseTimeWindows = false,
 				RestrictionAttributeNames = new List<string>(new string[] { "OneWay "})
 			}, cancellationToken);
@@ -94,17 +84,13 @@ namespace RoutingSample.Models
 
 
 //The following is solely used for mocking the route and location services in unit tests
-#if NETFX_CORE
-		private HttpMessageHandler messageHandler = new ESRI.ArcGIS.Runtime.Http.ArcGISHttpClientHandler();
-#endif
+		private HttpMessageHandler messageHandler = new ArcGISHttpClientHandler();
 
-#if NETFX_CORE
 		public RouteService(HttpMessageHandler messageHandler) //Used for testing with mock service
 		{
 			if (messageHandler == null)
 				throw new ArgumentNullException();
 			this.messageHandler = messageHandler;
 		}
-#endif
 	}
 }

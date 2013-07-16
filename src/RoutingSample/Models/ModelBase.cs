@@ -47,9 +47,13 @@ namespace RoutingSample
 			get 
 			{
 #if WINDOWS_PHONE
-				return System.ComponentModel.DesignerProperties.GetIsInDesignMode(System.Windows.Application.Current.RootVisual);
-#else
+				return 
+					System.Windows.Application.Current.RootVisual != null &&
+					System.ComponentModel.DesignerProperties.GetIsInDesignMode(System.Windows.Application.Current.RootVisual);
+#elif NETFX_CORE
 				return Windows.ApplicationModel.DesignMode.DesignModeEnabled;
+#else
+				return false;
 #endif
 			}
 		}

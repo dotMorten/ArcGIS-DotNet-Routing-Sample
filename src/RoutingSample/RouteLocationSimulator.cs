@@ -1,5 +1,6 @@
-﻿using ESRI.ArcGIS.Runtime;
-using ESRI.ArcGIS.Runtime.Tasks;
+﻿using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Location;
+using Esri.ArcGISRuntime.Tasks.NetworkAnalyst;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml;
-#elif WINDOWS_PHONE
+#else
 using System.Windows.Threading;
 #endif
 
 namespace RoutingSample
 {
 	/// <summary>
-	/// Location simulator that takes a route result and simulates driving down the route.
+	/// Location simulator that takes a route result and simulates driving down the route
 	/// </summary>
-	public class RouteLocationSimulator : ESRI.ArcGIS.Runtime.Xaml.ILocationProvider
+	public class RouteLocationSimulator : ILocationProvider
 	{
 		private DispatcherTimer timer;
 		private RouteResult m_route;
@@ -39,7 +40,7 @@ namespace RoutingSample
 			timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
 			if (startPoint == null)
 			{
-				startPoint = route.Directions.First().MergedGeometry.GetPoint(0, 0);
+				startPoint = new MapPoint(route.Directions.First().MergedGeometry.Paths[0][0], SpatialReferences.Wgs84);
 			}
 			timer.Tick += timer_Tick;
 			Speed = 50; // double.NaN;
@@ -77,11 +78,11 @@ namespace RoutingSample
 
 			if (LocationChanged != null)
 			{
-				 LocationChanged(this, new ESRI.ArcGIS.Runtime.Xaml.LocationInfo()
+				 LocationChanged(this, new LocationInfo()
 				{
 					Course = course,
 					Speed = Speed,
-					Location = new MapPoint(lon, lat, SpatialReference.Wgs84),
+					Location = new MapPoint(lon, lat, SpatialReferences.Wgs84),
 					HorizontalAccuracy = 0.001
 				});
 			}
@@ -90,7 +91,7 @@ namespace RoutingSample
 		/// <summary>
 		/// Raised when the location provider has a new location.
 		/// </summary>
-		public event EventHandler<ESRI.ArcGIS.Runtime.Xaml.LocationInfo> LocationChanged;
+		public event EventHandler<LocationInfo> LocationChanged;
 
 		/// <summary>
 		/// Starts the location provider.
@@ -139,20 +140,22 @@ namespace RoutingSample
 				totalDistance = 0;
 				drivePath = currDir.MergedGeometry;
 				course = 0; dist = 0;
-				var start = drivePath.GetPoint(0, 0);
+				var start = drivePath.Paths[0][0];
 			}
-			for (int j = 0; j < drivePath.PartCount; j++)
+			//else
+			{
+				for (int j = 0; j < drivePath.Paths.Count; j++)
 			{
 
-				var part = drivePath.GetPart(j);
+					var part = drivePath.Paths[j];
 				for (int i = 0; i < part.Count - 1; i++)
 				{
 					var p1 = part[i];
 					var p2 = part[i + 1];
 					if (p1.X == p2.X && p2.Y == p2.Y)
 						continue;
-					Polyline linesegment = new Polyline() { SpatialReference = SpatialReference.Wgs84 };
-					linesegment.AddPart(new MapPoint[] { new MapPoint(p1.X, p1.Y), new MapPoint(p2.X, p2.Y) });
+						Polyline linesegment = new Polyline() { SpatialReference = SpatialReferences.Wgs84 };
+						linesegment.Paths.AddPart(new Coordinate[] { new Coordinate(p1.X, p1.Y), new Coordinate(p2.X, p2.Y) });
 					double distToWaypoint = GeometryEngine.GeodesicLength(linesegment);
 					if (dist < accDist + distToWaypoint)
 					{
@@ -163,6 +166,7 @@ namespace RoutingSample
 					}
 					accDist += distToWaypoint;
 				}
+			}
 			}
 			return null;
 		}

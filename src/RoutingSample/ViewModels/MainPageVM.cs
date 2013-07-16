@@ -1,5 +1,5 @@
-﻿using ESRI.ArcGIS.Runtime;
-using ESRI.ArcGIS.Runtime.Xaml;
+﻿using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Location;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -187,7 +187,7 @@ namespace RoutingSample.ViewModels
 						Route.SetCurrentLocation(LocationDisplay.CurrentLocation.Location);
 					if (firstLocation)
 					{
-						var location = GeometryEngine.Project(LocationDisplay.CurrentLocation.Location, SpatialReference.WebMercator) as MapPoint;
+						var location = GeometryEngine.Project(LocationDisplay.CurrentLocation.Location, SpatialReferences.WebMercator) as MapPoint;
 						ExtentRequested = GeometryEngine.Buffer(location, LocationDisplay.CurrentLocation.HorizontalAccuracy + 500).Extent;
 						firstLocation = false;
 						if (Route == null && m_routeTaskCancellationToken == null && !string.IsNullOrWhiteSpace(RouteToAddress)) //calculate route now

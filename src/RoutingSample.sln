@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingSample_WP", "Routing
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingSample.Tests", "RoutingSample.Tests\RoutingSample.Tests.csproj", "{2E3FDFA4-CD8F-4032-998B-F49E7C826C88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingSample.Desktop", "RoutingSample.Desktop\RoutingSample.Desktop.csproj", "{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -67,6 +69,13 @@ Global
 		{2E3FDFA4-CD8F-4032-998B-F49E7C826C88}.Release|x86.ActiveCfg = Release|x86
 		{2E3FDFA4-CD8F-4032-998B-F49E7C826C88}.Release|x86.Build.0 = Release|x86
 		{2E3FDFA4-CD8F-4032-998B-F49E7C826C88}.Release|x86.Deploy.0 = Release|x86
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

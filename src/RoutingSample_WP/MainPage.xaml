@@ -11,7 +11,8 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
-	xmlns:esri="clr-namespace:ESRI.ArcGIS.Runtime.Xaml;assembly=ESRI.ArcGIS.Runtime.Xaml"
+	xmlns:esri="clr-namespace:Esri.ArcGISRuntime.Controls;assembly=Esri.ArcGISRuntime"
+	xmlns:layers="clr-namespace:Esri.ArcGISRuntime.Layers;assembly=Esri.ArcGISRuntime"
 	xmlns:vm="clr-namespace:RoutingSample.ViewModels"
 	xmlns:local="clr-namespace:RoutingSample"
     mc:Ignorable="d">
@@ -64,15 +65,14 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 			<esri:Map LocationDisplaySettings="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
-
-				<esri:ArcGISTiledMapServiceLayer
+				<layers:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
-				<esri:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
-				</esri:GraphicsLayer>
+				<layers:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
+				</layers:GraphicsLayer>
 
-				<esri:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
-				</esri:GraphicsLayer>
+				<layers:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
+				</layers:GraphicsLayer>
 
 			</esri:Map>
 		</Grid>

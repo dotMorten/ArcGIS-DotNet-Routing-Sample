@@ -1,5 +1,5 @@
-﻿using ESRI.ArcGIS.Runtime;
-using ESRI.ArcGIS.Runtime.Tasks;
+﻿using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Tasks.NetworkAnalyst;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using RoutingSample.Models;
 using System;
@@ -20,8 +20,8 @@ namespace RoutingSample.Tests
 		{
 			var testHandler = TestMessageHandler.FromResourceResponse("RouteFrom1172_34ToRedlandsCA");
 			var task = new RouteService(testHandler).GetRoute(
-				new MapPoint(-117.2, 34) { SpatialReference = SpatialReference.Wgs84 },
-				new MapPoint(-117.18253721699972, 34.055566969000438) { SpatialReference = SpatialReference.Wgs84 },
+				new MapPoint(-117.2, 34) { SpatialReference = SpatialReferences.Wgs84 },
+				new MapPoint(-117.18253721699972, 34.055566969000438) { SpatialReference = SpatialReferences.Wgs84 },
 				CancellationToken.None);
 			task.Wait();
 			route = task.Result;
@@ -35,8 +35,8 @@ namespace RoutingSample.Tests
 			Assert.AreEqual(0, ds.DistanceToDestination);
 			Assert.IsNull(ds.NextManeuver);
 			//Push location to data source
-			ds.SetCurrentLocation(new MapPoint(-117.16537, 34.122730, SpatialReference.Wgs84));
-
+			ds.SetCurrentLocation(new MapPoint(-117.16537, 34.122730, SpatialReferences.Wgs84));
+			//Validate that RouteDataSource updated correctly
 			Assert.AreEqual(21166.0, ds.DistanceToDestination);
 			Assert.AreEqual(new TimeSpan(0, 18, 36), ds.TimeToDestination);
 			Assert.AreEqual(124, ds.DistanceToWaypoint);

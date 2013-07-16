@@ -1,6 +1,7 @@
-﻿using ESRI.ArcGIS.Runtime;
-using ESRI.ArcGIS.Runtime.Symbology;
-using ESRI.ArcGIS.Runtime.Tasks;
+﻿using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Layers;
+using Esri.ArcGISRuntime.Symbology;
+using Esri.ArcGISRuntime.Tasks.NetworkAnalyst;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#if NETFX_CORE
 using Windows.UI;
+#else
+using System.Windows.Media;
+#endif
 
 namespace RoutingSample
 {
@@ -74,7 +79,7 @@ namespace RoutingSample
 		private string MetersToMilesFeet(double distance)
 		{
 
-			var miles = LinearUnit.Mile.ConvertFromMeters(distance);
+			var miles = Units.Miles.ConvertFromMeters(distance);
 			if (miles >= 10)
 				return string.Format("{0:0} mi", miles);
 			if (miles >= 1)
@@ -82,7 +87,7 @@ namespace RoutingSample
 			else if (miles >= .25)
 				return string.Format("{0:0.00} mi", miles);
 			else //less than .25mi
-				return string.Format("{0:0} ft", LinearUnit.Foot.ConvertFromMeters(distance));
+				return string.Format("{0:0} ft", Units.Feet.ConvertFromMeters(distance));
 		}
 
 		private void InitializeRoute()
@@ -94,10 +99,10 @@ namespace RoutingSample
 			foreach (var directions in m_route.Directions)
 			{
 				routeLines.Add(new Graphic() { Geometry = CombineParts(directions.MergedGeometry), Symbol = lineSymbol });
-				var turns = (from a in directions.Graphics select a.Geometry).OfType<Polyline>().Select(line => line.GetPoint(0, 0));
+				var turns = (from a in directions.Graphics select a.Geometry).OfType<Polyline>().Select(line => line.Paths[0][0]);
 				foreach (var m in turns)
 				{
-					maneuvers.Add(new Graphic() { Geometry = m, Symbol = turnSymbol });
+					maneuvers.Add(new Graphic() { Geometry = new MapPoint(m, SpatialReferences.Wgs84), Symbol = turnSymbol });
 				}
 			}
 			RouteLines = routeLines;
@@ -154,10 +159,6 @@ namespace RoutingSample
 					TimeToWaypoint = TimeSpan.FromSeconds(Math.Round(timeLeft * 60));
 					TimeToDestination = TimeSpan.FromSeconds(Math.Round(totalTimeLeft * 60));
 					DistanceToWaypoint = Math.Round(segmentLengthLeft);
-					if(DistanceToDestination < Math.Round(totallength))
-					{
-						System.Diagnostics.Debug.Assert(false);
-					}
 					DistanceToDestination = Math.Round(totallength);
 					SnappedLocation = snappedLocation;
 					var maneuverType = next.Attributes["maneuverType"];
@@ -176,18 +177,18 @@ namespace RoutingSample
 
 		private static Polyline CombineParts(Polyline line)
 		{
-			List<MapPoint> vertices = new List<MapPoint>();
-			MapPoint lastvertex = line.GetPoint(0,0);
+			List<Coordinate> vertices = new List<Coordinate>();
+			Coordinate lastvertex = line.Paths[0][0];
 			vertices.Add(lastvertex);
-			for (int i = 0; i < line.PartCount; i++)
+			for (int i = 0; i < line.Paths.Count; i++)
 			{
-				for (int j = 1; j < line.GetPointCount(i); j++)
+				for (int j = 1; j < line.Paths[i].Count; j++)
 				{
-					vertices.Add(line.GetPoint(i, j));
+					vertices.Add(line.Paths[i][j]);
 				}
 			}
 			Polyline newline= new Polyline() { SpatialReference = line.SpatialReference };
-			newline.AddPart(vertices);
+			newline.Paths.AddPart(vertices);
 			return newline;
 		}
 		
@@ -197,40 +198,40 @@ namespace RoutingSample
 			double distance1 = 0;
 			double distance2 = 0;
 			int pointIndex = proximity.PointIndex;
-			int vertexCount = segment.GetPointCount(0);
-			var vertexPoint = segment.GetPoint(proximity.PartIndex, pointIndex);
-			MapPoint previousPoint;
+			int vertexCount = segment.Paths[0].Count;
+			var vertexPoint = segment.Paths[proximity.PartIndex][pointIndex];
+			Coordinate previousPoint;
 			int onSegmentIndex = 0;
 			//Detect which line segment we currently are on
 			if (pointIndex == 0) //Snapped to first vertex
 				onSegmentIndex = 0;
 			else if (pointIndex == vertexCount - 1) //Snapped to last vertex
-				onSegmentIndex = segment.GetPointCount(0) - 2;
+				onSegmentIndex = segment.Paths[0].Count - 2;
 			else
 			{
-				MapPoint nextPoint = segment.GetPoint(0, pointIndex + 1);
-				var d1 = GeometryEngine.DistanceFromGeometry(vertexPoint, nextPoint);
-				var d2 = GeometryEngine.DistanceFromGeometry(location, nextPoint);
+				Coordinate nextPoint = segment.Paths[0][pointIndex + 1];
+				var d1 = GeometryEngine.DistanceFromGeometry(new MapPoint(vertexPoint, segment.SpatialReference), new MapPoint(nextPoint, segment.SpatialReference));
+				var d2 = GeometryEngine.DistanceFromGeometry(location, new MapPoint( nextPoint, segment.SpatialReference));
 				if (d1 < d2)
 					onSegmentIndex = pointIndex - 1;
 				else
 					onSegmentIndex = pointIndex;
 			}
-			previousPoint = segment.GetPoint(0, 0);
+			previousPoint = segment.Paths[0][0];
 			for (int j = 1; j < onSegmentIndex + 1; j++)
 			{
-				MapPoint point = segment.GetPoint(0, j);
-				distance1 += GeometryEngine.DistanceFromGeometry(previousPoint, point);
+				Coordinate point = segment.Paths[0][j];
+				distance1 += GeometryEngine.DistanceFromGeometry(new MapPoint(previousPoint, segment.SpatialReference), new MapPoint(point, segment.SpatialReference));
 				previousPoint = point;
 			}
-			distance1 += GeometryEngine.DistanceFromGeometry(previousPoint, location);
-			previousPoint = segment.GetPoint(0, onSegmentIndex + 1);
-			distance2 = GeometryEngine.DistanceFromGeometry(location, previousPoint);
+			distance1 += GeometryEngine.DistanceFromGeometry(new MapPoint(previousPoint, segment.SpatialReference), location);
+			previousPoint = segment.Paths[0][onSegmentIndex + 1];
+			distance2 = GeometryEngine.DistanceFromGeometry(location, new MapPoint(previousPoint, segment.SpatialReference));
 			previousPoint = vertexPoint;
-			for (int j = onSegmentIndex + 2; j < segment.GetPointCount(0); j++)
+			for (int j = onSegmentIndex + 2; j < segment.Paths[0].Count; j++)
 			{
-				MapPoint point = segment.GetPoint(0, j);
-				distance2 += GeometryEngine.DistanceFromGeometry(previousPoint, point);
+				Coordinate point = segment.Paths[0][j];
+				distance2 += GeometryEngine.DistanceFromGeometry(new MapPoint(previousPoint, segment.SpatialReference), new MapPoint(point, segment.SpatialReference));
 				previousPoint = point;
 			}
 

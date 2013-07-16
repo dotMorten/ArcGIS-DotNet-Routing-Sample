@@ -1,5 +1,5 @@
-﻿using ESRI.ArcGIS.Runtime;
-using ESRI.ArcGIS.Runtime.Xaml;
+﻿using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml;
-#elif WINDOWS_PHONE
+#else
 using System.Windows;
 #endif
 
@@ -49,29 +49,17 @@ namespace RoutingSample
 				Map map = d as Map;
 				if (e.NewValue is Envelope)
 				{
-					var extent = (e.NewValue as Envelope);
 					if (map.Extent != null)
 					{
-						//If requested extent is a different spatial reference, project it first
-						if (extent.SpatialReference != null && map.SpatialReference != extent.SpatialReference)
+						var extent = (e.NewValue as Envelope);
+						if (extent.SpatialReference != null && map.SpatialReference != extent.SpatialReference
+							&& map.SpatialReference != null)
 							extent = GeometryEngine.Project(extent, map.SpatialReference) as Envelope;
 						map.ZoomTo(extent);
 					}
-					else //Map not ready, wait for the map to set its extent
-					{
-						EventHandler handler = null;
-						handler = (sender, eventargs) =>
-						{
-							if (map.Extent != null)
+					else //Map not ready, try again later (yeah... I know... not pretty... I could do better but it's late and I'm tired)
 							{
-								map.ExtentChanged -= handler;
-								if (map.GetValue(ZoomToProperty) == extent) //Ensure another extent hasn't been requested in the meantime
-								{
-									OnZoomToPropertyChanged(d, e);
-								}
-							}
-						};
-						map.ExtentChanged += handler;
+						Task.Delay(100).ContinueWith(_ => OnZoomToPropertyChanged(d, e), TaskScheduler.FromCurrentSynchronizationContext());
 					}
 				}
 			}
