@@ -24,7 +24,7 @@ namespace RoutingSample.ViewModels
 		private bool m_IsCalculatingRoute;
 		private Envelope m_ExtentRequested;
 		private string m_RouteCalculationErrorMessage;
-		private LocationDisplaySettings m_locationDisplay;
+		private LocationDisplay m_locationDisplay;
 		#endregion
 
 		/// <summary>
@@ -117,13 +117,13 @@ namespace RoutingSample.ViewModels
 		/// <summary>
 		/// The current location display used for displaying location on the map
 		/// </summary>
-		public LocationDisplaySettings LocationDisplay
+		public LocationDisplay LocationDisplay
 		{
 			get
 			{
 				if (m_locationDisplay == null)
 				{
-					m_locationDisplay = new LocationDisplaySettings();
+					m_locationDisplay = new LocationDisplay();
 					m_locationDisplay.PropertyChanged += LocationDisplay_PropertyChanged;
 					m_locationDisplay.IsEnabled = true;
 					if (Route != null)

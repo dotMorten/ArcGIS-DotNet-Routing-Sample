@@ -96,10 +96,10 @@ namespace RoutingSample
 			var maneuvers = new ObservableCollection<Graphic>();
 			var lineSymbol = new SimpleLineSymbol() { Width = 10, Color = Color.FromArgb(190, 50, 50, 255) };
 			var turnSymbol = new SimpleMarkerSymbol() { Size = 20, Outline = new SimpleLineSymbol() { Color = Color.FromArgb(255, 0, 255, 0), Width = 5 }, Color = Color.FromArgb(180, 255, 255, 255) };
-			foreach (var directions in m_route.Directions)
+			foreach (var directions in m_route.Routes)
 			{
-				routeLines.Add(new Graphic() { Geometry = CombineParts(directions.MergedGeometry), Symbol = lineSymbol });
-				var turns = (from a in directions.Graphics select a.Geometry).OfType<Polyline>().Select(line => line.Paths[0][0]);
+				routeLines.Add(new Graphic() { Geometry = CombineParts(directions.RouteGraphic.Geometry as Polyline), Symbol = lineSymbol });
+				var turns = (from a in directions.RouteDirections select a.Geometry).OfType<Polyline>().Select(line => line.Paths[0][0]);
 				foreach (var m in turns)
 				{
 					maneuvers.Add(new Graphic() { Geometry = new MapPoint(m, SpatialReferences.Wgs84), Symbol = turnSymbol });
@@ -115,56 +115,60 @@ namespace RoutingSample
 		/// <param name="location"></param>
 		public void SetCurrentLocation(MapPoint location)
 		{
-			Graphic closest = null;
+			RouteDirection closest = null;
 			double distance = double.NaN;
 			MapPoint snappedLocation = null;
-			Direction direction = null;
+			Route direction = null;
 			// Find the route part that we are currently on by snapping to each segment and see which one is the closest
-			foreach (var dir in m_route.Directions)
+			foreach (var dir in m_route.Routes)
 			{
-				var closestCandidate = (from a in dir.Graphics
-										select new { Graphic = a, Proximity = GeometryEngine.NearestCoordinateInGeometry(a.Geometry, location) }).OrderBy(b => b.Proximity.Distance).FirstOrDefault();
+				var closestCandidate = (from a in dir.RouteDirections
+										where a.Geometry is Polyline
+										select new { Direction = a, Proximity = GeometryEngine.NearestCoordinateInGeometry(a.Geometry, location) }).OrderBy(b => b.Proximity.Distance).FirstOrDefault();
 				if (double.IsNaN(distance) || distance < closestCandidate.Proximity.Distance)
 				{
 					distance = closestCandidate.Proximity.Distance;
-					closest = closestCandidate.Graphic;
+					closest = closestCandidate.Direction;
 					snappedLocation = closestCandidate.Proximity.Point;
 					direction = dir;
 				}
 			}
 			if (closest != null)
 			{
-				var graphics = direction.Graphics.ToList();
-				var idx = graphics.IndexOf(closest);
-				if (idx < graphics.Count)
+				var directions = direction.RouteDirections.ToList();
+				var idx = directions.IndexOf(closest);
+				if (idx < directions.Count)
 				{
-					Graphic next = graphics[idx + 1];
+					RouteDirection next = directions[idx + 1];
 
 					//calculate how much is left of current route segment
 					var segment = closest.Geometry as Polyline;
 					var proximity = GeometryEngine.NearestVertexInGeometry(segment, snappedLocation);
 					double frac = 1 - GetFractionAlongLine(segment, proximity, snappedLocation);
-					double timeLeft = (Convert.ToDouble(closest.Attributes["time"])) * frac;
-					double segmentLengthLeft = (Convert.ToDouble(closest.Attributes["length"])) * frac;
+					TimeSpan timeLeft = new TimeSpan((long)(closest.Time.Ticks * frac));
+					double segmentLengthLeft = (Convert.ToDouble(closest.GetLength(Units.Meters))) * frac;
 					//Sum up the time and lengths for the remaining route segments
-					double totalTimeLeft = timeLeft;
+					TimeSpan totalTimeLeft = timeLeft;
 					double totallength = segmentLengthLeft;
-					for (int i = idx + 1; i < graphics.Count; i++)
+					for (int i = idx + 1; i < directions.Count; i++)
 					{
-						totalTimeLeft += Convert.ToDouble(graphics[i].Attributes["time"]);
-						totallength += Convert.ToDouble(graphics[i].Attributes["length"]);
+						totalTimeLeft += directions[i].Time;
+						totallength += directions[i].GetLength(Units.Meters);
 					}
 
 					//Update properties
-					TimeToWaypoint = TimeSpan.FromSeconds(Math.Round(timeLeft * 60));
-					TimeToDestination = TimeSpan.FromSeconds(Math.Round(totalTimeLeft * 60));
+					TimeToWaypoint = timeLeft;
+					TimeToDestination = totalTimeLeft;
 					DistanceToWaypoint = Math.Round(segmentLengthLeft);
 					DistanceToDestination = Math.Round(totallength);
 					SnappedLocation = snappedLocation;
-					var maneuverType = next.Attributes["maneuverType"];
+					var maneuverType = next.ManeuverType;
+#if NETFX_CORE || WINDOWS_PHONE
 					ManeuverImage = new Uri(string.Format("ms-appx:///Assets/Maneuvers/{0}.png", maneuverType));
-
-					NextManeuver = next.Attributes["text"] as string;
+#else
+					ManeuverImage = new Uri(string.Format("pack://application:,,,/Assets/Maneuvers/{0}.png", maneuverType));
+#endif
+					NextManeuver = next.Text;
 
 					RaisePropertiesChanged(new string[] {
 						"NextManeuver","SnappedLocation", "CurrentDirection", "TimeToWaypoint", 

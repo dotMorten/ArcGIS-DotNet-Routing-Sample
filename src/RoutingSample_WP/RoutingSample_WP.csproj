@@ -128,9 +128,9 @@
     <Content Include="Assets\Maneuvers\BearLeft.scale-100.png" />
     <Content Include="Assets\Maneuvers\BearRight.scale-100.png" />
     <Content Include="Assets\Maneuvers\CheckeredFlag.scale-100.png" />
-    <Content Include="Assets\Maneuvers\esriDMTStraight.png" />
-    <Content Include="Assets\Maneuvers\esriDMTTurnLeft.png" />
-    <Content Include="Assets\Maneuvers\esriDMTTurnRight.png" />
+    <Content Include="Assets\Maneuvers\Straight.png" />
+    <Content Include="Assets\Maneuvers\TurnLeft.png" />
+    <Content Include="Assets\Maneuvers\TurnRight.png" />
     <Content Include="Assets\Maneuvers\GoOn.scale-100.png" />
     <Content Include="Assets\Maneuvers\Merge.scale-100.png" />
     <Content Include="Assets\Maneuvers\RampLeft.scale-100.png" />
@@ -162,7 +162,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="ESRI.ArcGISRuntime, Version=10.2.0.0">
+    <SDKReference Include="ESRI.ArcGISRuntime, Version=10.2.1.0">
       <Name>ArcGIS Runtime for Windows Phone %28Beta%29</Name>
     </SDKReference>
   </ItemGroup>

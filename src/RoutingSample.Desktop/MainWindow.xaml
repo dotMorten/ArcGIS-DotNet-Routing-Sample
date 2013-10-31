@@ -4,12 +4,12 @@
         xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
         xmlns:local="clr-namespace:RoutingSample"
         xmlns:vm="clr-namespace:RoutingSample.ViewModels"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="400" Width="525">
     <Window.Resources>
         <vm:MainPageVM x:Key="viewmodel" />
     </Window.Resources>
 
-    <Grid DataContext="{StaticResource viewmodel}" >
+    <Grid DataContext="{StaticResource viewmodel}" Background="LightGray" >
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="320"/>
@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
 
         <!--SidePanel-->
-        <StackPanel Margin="20">
+        <StackPanel Margin="20" >
             <!--Create Route Panel-->
             <StackPanel>
                 <TextBlock Text="Enter address:" />
@@ -28,7 +28,7 @@
             </StackPanel>
 
             <!--Route Details Panel-->
-            <StackPanel >
+            <StackPanel>
 
                 <TextBlock Text="{Binding Route.NextManeuver}" FontSize="24" />
 
@@ -45,12 +45,13 @@
                 <TextBlock Text="{Binding Route.MilesToDestination}" FontSize="24" />
 
                 <Image Source="{Binding Route.ManeuverImage}" HorizontalAlignment="Center" Width="50" />
+
             </StackPanel>
 
         </StackPanel>
 
         <Grid x:Name="MapPanel" Grid.Column="1">
-            <esri:Map LocationDisplaySettings="{Binding LocationDisplay}"
+            <esri:Map LocationDisplay="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
 
                 <esri:ArcGISTiledMapServiceLayer

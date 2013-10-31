@@ -34,12 +34,12 @@ namespace RoutingSample.Models
 
 		public async Task<MapPoint> Geocode(string address, CancellationToken cancellationToken)
 		{
-			Locator locator = new Locator(new Uri(locatorService))
+			LocatorTask locator = new OnlineLocatorTask(new Uri(locatorService), null)
 				 { HttpMessageHandler = messageHandler };
-			var result = await locator.FindAsync(new LocatorFindParameter(address),
+			var result = await locator.FindAsync(new OnlineLocatorFindParameters() { Text =  address },
 				cancellationToken).ConfigureAwait(false);
-			if (result.Locations != null && result.Locations.Count > 0)
-				return result.Locations.First().Feature.Geometry as MapPoint;
+			if (result != null && result.Count > 0)
+				return result.First().Location as MapPoint;
 			return null;
 		}
 
@@ -48,7 +48,7 @@ namespace RoutingSample.Models
 			return GetRoute(new MapPoint[] { from, to }, cancellationToken);
 		}
 
-		public Task<RouteResult> GetRoute(IEnumerable<MapPoint> stops, CancellationToken cancellationToken)
+		public async Task<RouteResult> GetRoute(IEnumerable<MapPoint> stops, CancellationToken cancellationToken)
 		{
 			if (stops == null)
 				throw new ArgumentNullException("stops");
@@ -70,16 +70,16 @@ namespace RoutingSample.Models
 				svc = longRouteService;
 
 			//Calculate route
-			RouteTask task = new RouteTask(new Uri(svc)) { HttpMessageHandler = messageHandler };
-			return task.SolveAsync(new RouteParameter(new FeatureStops(stopList))
-			{
-				OutputLines = OutputLine.TrueShapeWithMeasure,
-				OutSpatialReference = SpatialReferences.Wgs84,
-				ReturnStops = true,
-				DirectionsLengthUnits = Esri.ArcGISRuntime.ArcGISServices.MapUnit.Meters ,
-				UseTimeWindows = false,
-				RestrictionAttributeNames = new List<string>(new string[] { "OneWay "})
-			}, cancellationToken);
+			RouteTask task = new OnlineRouteTask(new Uri(svc)) { HttpMessageHandler = messageHandler };
+			var parameters = await task.GetDefaultParametersAsync().ConfigureAwait(false);
+			parameters.Stops = new Esri.ArcGISRuntime.Tasks.NetworkAnalyst.FeaturesAsFeature(stopList);
+			parameters.ReturnStops = true;
+			parameters.OutputLines = OutputLine.TrueShapeWithMeasure;
+			parameters.OutSpatialReference = SpatialReferences.Wgs84;
+			parameters.DirectionsLengthUnit = Units.Meters;
+			parameters.UseTimeWindows = false;
+			parameters.RestrictionAttributeNames = new List<string>(new string[] { "OneWay " });
+			return await task.SolveAsync(parameters, cancellationToken);
 		}
 
 

@@ -40,13 +40,13 @@ namespace RoutingSample
 			timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
 			if (startPoint == null)
 			{
-				startPoint = new MapPoint(route.Directions.First().MergedGeometry.Paths[0][0], SpatialReferences.Wgs84);
+				startPoint = new MapPoint((route.Routes.First().RouteGraphic.Geometry as Polyline).Paths[0][0], SpatialReferences.Wgs84);
 			}
 			timer.Tick += timer_Tick;
 			Speed = 50; // double.NaN;
 			directionIndex = 0;
 			lineLength = 0;// GeometryEngine.GeodesicLength(route.Directions.First().MergedGeometry);
-			drivePath = route.Directions.First().MergedGeometry;
+			drivePath = route.Routes.First().RouteGraphic.Geometry as Polyline;
 		}
 
 		/// <summary>
@@ -99,7 +99,7 @@ namespace RoutingSample
 		/// <returns>
 		/// Task
 		/// </returns>
-		public Task Start()
+		public Task StartAsync()
 		{
 			timer.Start();
 			return Task.FromResult(true);
@@ -111,7 +111,7 @@ namespace RoutingSample
 		/// <returns>
 		/// Task
 		/// </returns>
-		public Task Stop()
+		public Task StopAsync()
 		{
 			timer.Stop();
 			return Task.FromResult(true);
@@ -132,13 +132,13 @@ namespace RoutingSample
 			if (dist > lineLength) //reached end - move to next direction, or start over
 			{
 				directionIndex++;
-				Direction currDir;
-				if (directionIndex >= m_route.Directions.Count)
+				Route currDir;
+				if (directionIndex >= m_route.Routes.Count)
 					directionIndex = 0;
-				currDir = m_route.Directions[directionIndex];
-				lineLength = GeometryEngine.GeodesicLength(currDir.MergedGeometry);
+				currDir = m_route.Routes[directionIndex];
+				lineLength = GeometryEngine.GeodesicLength(currDir.RouteGraphic.Geometry);
 				totalDistance = 0;
-				drivePath = currDir.MergedGeometry;
+				drivePath = currDir.RouteGraphic.Geometry as Polyline;
 				course = 0; dist = 0;
 				var start = drivePath.Paths[0][0];
 			}

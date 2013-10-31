@@ -116,6 +116,47 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\BearLeft.png">
+      <Link>Assets\Maneuvers\BearLeft.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\BearRight.png">
+      <Link>Assets\Maneuvers\BearRight.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\ForkLeft.png">
+      <Link>Assets\Maneuvers\ForkLeft.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\ForkRight.png">
+      <Link>Assets\Maneuvers\ForkRight.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\HighwayMerge.png">
+      <Link>Assets\Maneuvers\HighwayMerge.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\RampLeft.png">
+      <Link>Assets\Maneuvers\RampLeft.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\RampRight.png">
+      <Link>Assets\Maneuvers\RampRight.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\Roundabout .png">
+      <Link>Assets\Maneuvers\Roundabout .png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\Stop.png">
+      <Link>Assets\Maneuvers\Stop.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\Straight.png">
+      <Link>Assets\Maneuvers\Straight.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\TurnLeft.png">
+      <Link>Assets\Maneuvers\TurnLeft.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\TurnRight.png">
+      <Link>Assets\Maneuvers\TurnRight.png</Link>
+    </Resource>
+    <Resource Include="..\RoutingSample\Assets\Maneuvers\UTurn.png">
+      <Link>Assets\Maneuvers\UTurn.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
