@@ -157,8 +157,8 @@ namespace RoutingSample
 					}
 
 					//Update properties
-					TimeToWaypoint = timeLeft;
-					TimeToDestination = totalTimeLeft;
+					TimeToWaypoint = TimeSpan.FromSeconds(Math.Round(timeLeft.TotalSeconds));
+					TimeToDestination = TimeSpan.FromSeconds(Math.Round(totalTimeLeft.TotalSeconds));
 					DistanceToWaypoint = Math.Round(segmentLengthLeft);
 					DistanceToDestination = Math.Round(totallength);
 					SnappedLocation = snappedLocation;
