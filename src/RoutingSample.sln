@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingSample", "RoutingSample\RoutingSample.csproj", "{2D0B4439-0B01-45F3-B844-9B2A79684A79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingSample_WP", "RoutingSample_WP\RoutingSample_WP.csproj", "{D6BCAE00-7236-4082-9DC8-A2B8EC328CC0}"
@@ -71,6 +73,7 @@ Global
 		{2E3FDFA4-CD8F-4032-998B-F49E7C826C88}.Release|x86.Deploy.0 = Release|x86
 		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x64.Build.0 = Debug|Any CPU
 		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Debug|x86.Build.0 = Debug|Any CPU
 		{B2F60E3E-4038-455C-805C-3D7F8B80CE5C}.Release|ARM.ActiveCfg = Release|Any CPU
