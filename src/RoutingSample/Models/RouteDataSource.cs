@@ -79,7 +79,7 @@ namespace RoutingSample
 		private string MetersToMilesFeet(double distance)
 		{
 
-			var miles = Units.Miles.ConvertFromMeters(distance);
+			var miles = LinearUnits.Miles.ConvertFromMeters(distance);
 			if (miles >= 10)
 				return string.Format("{0:0} mi", miles);
 			if (miles >= 1)
@@ -87,7 +87,7 @@ namespace RoutingSample
 			else if (miles >= .25)
 				return string.Format("{0:0.00} mi", miles);
 			else //less than .25mi
-				return string.Format("{0:0} ft", Units.Feet.ConvertFromMeters(distance));
+				return string.Format("{0:0} ft", LinearUnits.Feet.ConvertFromMeters(distance));
 		}
 
 		private void InitializeRoute()
@@ -146,14 +146,14 @@ namespace RoutingSample
 					var proximity = GeometryEngine.NearestVertexInGeometry(segment, snappedLocation);
 					double frac = 1 - GetFractionAlongLine(segment, proximity, snappedLocation);
 					TimeSpan timeLeft = new TimeSpan((long)(closest.Time.Ticks * frac));
-					double segmentLengthLeft = (Convert.ToDouble(closest.GetLength(Units.Meters))) * frac;
+					double segmentLengthLeft = (Convert.ToDouble(closest.GetLength(LinearUnits.Meters))) * frac;
 					//Sum up the time and lengths for the remaining route segments
 					TimeSpan totalTimeLeft = timeLeft;
 					double totallength = segmentLengthLeft;
 					for (int i = idx + 1; i < directions.Count; i++)
 					{
 						totalTimeLeft += directions[i].Time;
-						totallength += directions[i].GetLength(Units.Meters);
+						totallength += directions[i].GetLength(LinearUnits.Meters);
 					}
 
 					//Update properties

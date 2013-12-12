@@ -76,7 +76,7 @@ namespace RoutingSample.Models
 			parameters.ReturnStops = true;
 			parameters.OutputLines = OutputLine.TrueShapeWithMeasure;
 			parameters.OutSpatialReference = SpatialReferences.Wgs84;
-			parameters.DirectionsLengthUnit = Units.Meters;
+			parameters.DirectionsLengthUnit = LinearUnits.Meters;
 			parameters.UseTimeWindows = false;
 			parameters.RestrictionAttributeNames = new List<string>(new string[] { "OneWay " });
 			return await task.SolveAsync(parameters, cancellationToken);
