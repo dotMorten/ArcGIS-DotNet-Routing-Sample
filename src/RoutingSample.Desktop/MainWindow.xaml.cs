@@ -24,5 +24,10 @@ namespace RoutingSample.Desktop
         {
             InitializeComponent();
         }
+
+		private void Exit_Clicked(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
     }
 }

@@ -4,7 +4,7 @@
         xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
         xmlns:local="clr-namespace:RoutingSample"
         xmlns:vm="clr-namespace:RoutingSample.ViewModels"
-        Title="MainWindow" Height="400" Width="525">
+        Title="MainWindow" Height="450" Width="750">
     <Window.Resources>
         <vm:MainPageVM x:Key="viewmodel" />
     </Window.Resources>
@@ -16,8 +16,34 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<!--Menu-->
+		<Menu Grid.ColumnSpan="2">
+			<MenuItem Header="File">
+				<MenuItem Header="Exit" Click="Exit_Clicked" />
+			</MenuItem>
+			<MenuItem Header="Edit" />
+			<MenuItem Header="View" />
+			<MenuItem Header="Help" />
+		</Menu>
+		<!--StatusBar-->
+		<StatusBar Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" DataContext="{Binding LocationDisplay}"	 >
+			<StatusBarItem  >
+				<TextBlock Text="{Binding CurrentLocation.Speed, StringFormat={}Speed: {0} kph}" />
+			</StatusBarItem>
+			<Separator Opacity=".5"/>
+			<StatusBarItem  >
+				<TextBlock Text="{Binding CurrentLocation.Course, StringFormat={}Heading: {0:0}}" />
+			</StatusBarItem>
+		</StatusBar>
+
+		
         <!--SidePanel-->
-        <StackPanel Margin="20" >
+        <StackPanel Margin="20" Grid.Row="1" >
             <!--Create Route Panel-->
             <StackPanel>
                 <TextBlock Text="Enter address:" />
@@ -50,7 +76,7 @@
 
         </StackPanel>
 
-        <Grid x:Name="MapPanel" Grid.Column="1">
+        <Grid x:Name="MapPanel" Grid.Column="1" Grid.Row="1">
             <esri:Map LocationDisplay="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
 

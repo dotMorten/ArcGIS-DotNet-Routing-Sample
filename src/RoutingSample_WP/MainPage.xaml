@@ -25,6 +25,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="TitlePanel" Grid.Row="0">
@@ -33,31 +34,16 @@
 				<TextBox Text="{Binding RouteToAddress, Mode=TwoWay}" />
 
 				<ProgressBar IsIndeterminate="{Binding IsCalculatingRoute}" />
-				<TextBlock Text="{Binding RouteCalculationErrorMessage}" Foreground="Red" FontWeight="Bold" />
+				<TextBlock Text="{Binding RouteCalculationErrorMessage}" Foreground="Red" FontWeight="Bold" 
+						   Visibility="{Binding RouteCalculationErrorMessage, Converter={StaticResource nullToCollapsed}}"/>
 			</StackPanel>
 
 			<!--Route Details Panel-->
 			<Grid DataContext="{Binding Route}" Visibility="{Binding Converter={StaticResource nullToCollapsed}}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<TextBlock Text="{Binding NextManeuver}" FontSize="32" Grid.ColumnSpan="2" TextWrapping="Wrap" />
-
-				<TextBlock Text="WAYPOINT" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
-				<TextBlock Text="{Binding MilesToWaypoint}" FontSize="32" Grid.Row="2" HorizontalAlignment="Center" />
-				<TextBlock Text="{Binding TimeToWaypoint}" FontSize="32" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" />
-
-				<TextBlock Text="DESTINATION" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
-				<TextBlock Text="{Binding TimeToDestination}" FontSize="32" Grid.Row="4" HorizontalAlignment="Center" />
-				<TextBlock Text="{Binding MilesToDestination}" FontSize="32" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" />
+				<TextBlock Text="{Binding NextManeuver}" 
+						   FontSize="32" Grid.ColumnSpan="2" 
+						   HorizontalAlignment="Center"
+						   TextWrapping="Wrap" />
 			</Grid>
 		</StackPanel>
 
@@ -75,6 +61,31 @@
 				</layers:GraphicsLayer>
 
 			</esri:Map>
+		</Grid>
+		<Grid Grid.Row="2"
+			  DataContext="{Binding Route}" Visibility="{Binding Converter={StaticResource nullToCollapsed}}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0" Margin="5">
+				<TextBlock Text="{Binding MilesToWaypoint}" FontSize="28" Grid.Row="2" HorizontalAlignment="Center" />
+				<TextBlock FontSize="14" Text="WAYPOINT" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+			</StackPanel>
+			<StackPanel Grid.Column="1" Margin="5">
+				<TextBlock Text="{Binding TimeToWaypoint}" FontSize="28" Grid.Row="2" HorizontalAlignment="Center" />
+				<TextBlock FontSize="14" Text="WAYPOINT" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+			</StackPanel>
+			<StackPanel Grid.Column="2" Margin="5">
+				<TextBlock Text="{Binding MilesToDestination}" FontSize="28" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" />
+				<TextBlock FontSize="14" Text="DESTINATION" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+			</StackPanel>
+			<StackPanel Grid.Column="3" Margin="5">
+				<TextBlock Text="{Binding TimeToDestination}" FontSize="28" Grid.Row="4" HorizontalAlignment="Center" />
+				<TextBlock FontSize="14" Text="DESTINATION" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+			</StackPanel>
 		</Grid>
     </Grid>
 

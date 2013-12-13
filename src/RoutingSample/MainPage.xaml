@@ -13,46 +13,26 @@
 	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
 			  DataContext="{StaticResource viewmodel}">
 
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="320"/>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
-
-		<!--SidePanel-->
-		<StackPanel Margin="20">
-				<!--Create Route Panel-->
-				<StackPanel>
-					<TextBlock Text="Enter address:" />
-					<TextBox Text="{Binding RouteToAddress, Mode=TwoWay}" />
-					
-					<ProgressBar IsIndeterminate="{Binding IsCalculatingRoute}" />
-					<TextBlock Text="{Binding RouteCalculationErrorMessage}" Foreground="Red" FontWeight="Bold" />
-				</StackPanel>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 			
 							<!--Route Details Panel-->
-				<StackPanel >
-					
-					<TextBlock Text="{Binding Route.NextManeuver}" FontSize="24" />
-					
-					<TextBlock Text="Time to waypoint:" />
-					<TextBlock Text="{Binding Route.TimeToWaypoint}" FontSize="24" />
-					
-					<TextBlock Text="Distance to waypoint:" />
-					<TextBlock Text="{Binding Route.MilesToWaypoint}" FontSize="24" />
-						
-					<TextBlock Text="Time to destination:" />
-					<TextBlock Text="{Binding Route.TimeToDestination}" FontSize="24" />
-					
-					<TextBlock Text="Distance to destination" />
-					<TextBlock Text="{Binding Route.MilesToDestination}" FontSize="24" />
-				
-				<Image Source="{Binding Route.ManeuverImage}" HorizontalAlignment="Center" Width="50" />
-				</StackPanel>
+		<Grid Visibility="{Binding Route, Converter={StaticResource nullToCollapsed}}">
+			<TextBlock Text="{Binding Route.NextManeuver}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
+			<Image Source="{Binding Route.ManeuverImage}" HorizontalAlignment="Left" Height="50" Margin="20,10,0,10" />
+			<TextBlock Text="{Binding RouteCalculationErrorMessage}" Foreground="Red" FontWeight="Bold" IsHitTestVisible="False"
+					   VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+			<Grid.Transitions>
+				<TransitionCollection>
+					<EdgeUIThemeTransition Edge="Top" />
+				</TransitionCollection>
+			</Grid.Transitions>
+		</Grid>
 
-		</StackPanel>
-
+		<Grid Grid.Row="1">
 		<Grid x:Uid="MapPanel" Grid.Column="1" >
-			
 			<esri:Map LocationDisplay="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
 
@@ -82,5 +62,42 @@
 			</esri:Map>
 		</Grid>
 
+			<!--Create Route Panel-->
+			<Border Margin="20" HorizontalAlignment="Right" VerticalAlignment="Top"
+					Background="#55000000" Padding="5">
+				<StackPanel>
+					<SearchBox PlaceholderText="Enter destination" SearchHistoryEnabled="True"  QueryText="{Binding RouteToAddress, Mode=TwoWay}" Width="200" />
+						<ProgressBar IsIndeterminate="{Binding IsCalculatingRoute}" Margin="0,0,0,-5" />
+				</StackPanel>
+			</Border>
+		
+			<Border VerticalAlignment="Bottom" Margin="100,0,100,0" Background="#55000000" Padding="5"
+					Visibility="{Binding Route, Converter={StaticResource nullToCollapsed}}">
+			<Grid >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<StackPanel>
+					<TextBlock Text="Time to waypoint:" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.TimeToWaypoint}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+				<StackPanel Grid.Column="1">
+					<TextBlock Text="Distance to waypoint:" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.MilesToWaypoint}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+				<StackPanel Grid.Column="2">
+					<TextBlock Text="Time to destination:" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.TimeToDestination}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+				<StackPanel Grid.Column="3">
+					<TextBlock Text="Distance to destination" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.MilesToDestination}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+			</Grid>
+			</Border>
+		</Grid>
 	</Grid>
 </Page>
