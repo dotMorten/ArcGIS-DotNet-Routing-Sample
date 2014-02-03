@@ -19,7 +19,7 @@ namespace RoutingSample
 	public class CommandBinder
 	{
 		/// <summary>
-		/// This command binding allows you to set the extent on a map from your view-model through binding
+		/// This command binding allows you to set the extent on a mapView from your view-model through binding
 		/// </summary>
 		public static Envelope GetZoomTo(DependencyObject obj)
 		{
@@ -27,7 +27,7 @@ namespace RoutingSample
 		}
 
 		/// <summary>
-		/// This command binding allows you to set the extent on a map from your view-model through binding
+		/// This command binding allows you to set the extent on a mapView from your view-model through binding
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <param name="extent"></param>
@@ -44,18 +44,18 @@ namespace RoutingSample
 
 		private static void OnZoomToPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			if (d is Map)
+			if (d is MapView)
 			{
-				Map map = d as Map;
+				MapView mapView = d as MapView;
 				if (e.NewValue is Envelope)
 				{
-					if (map.Extent != null)
+					if (mapView.Extent != null)
 					{
 						var extent = (e.NewValue as Envelope);
-						if (extent.SpatialReference != null && map.SpatialReference != extent.SpatialReference
-							&& map.SpatialReference != null)
-							extent = GeometryEngine.Project(extent, map.SpatialReference) as Envelope;
-						map.ZoomTo(extent);
+						if (extent.SpatialReference != null && mapView.SpatialReference != extent.SpatialReference
+							&& mapView.SpatialReference != null)
+							extent = GeometryEngine.Project(extent, mapView.SpatialReference) as Envelope;
+						mapView.ZoomTo(extent);
 					}
 					else //Map not ready, try again later (yeah... I know... not pretty... I could do better but it's late and I'm tired)
 							{

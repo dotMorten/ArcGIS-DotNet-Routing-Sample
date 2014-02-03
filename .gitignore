@@ -1,1 +1,8 @@
 src/RoutingSample/AppPackages/
+src/RoutingSample.Desktop/obj/
+src/RoutingSample.Tests/bin/
+src/RoutingSample.Tests/obj/
+src/RoutingSample/bin/
+src/RoutingSample/obj/
+src/RoutingSample_WP/Bin/
+src/RoutingSample_WP/obj/

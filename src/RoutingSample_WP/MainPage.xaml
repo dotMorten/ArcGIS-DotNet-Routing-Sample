@@ -49,18 +49,19 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-			<esri:Map LocationDisplay="{Binding LocationDisplay}"
+			<esri:MapView LocationDisplay="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
-				<layers:ArcGISTiledMapServiceLayer
+				<esri:Map>
+					<layers:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
-				<layers:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
-				</layers:GraphicsLayer>
+					<layers:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
+					</layers:GraphicsLayer>
 
-				<layers:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
-				</layers:GraphicsLayer>
-
-			</esri:Map>
+					<layers:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
+					</layers:GraphicsLayer>
+				</esri:Map>
+			</esri:MapView>
 		</Grid>
 		<Grid Grid.Row="2"
 			  DataContext="{Binding Route}" Visibility="{Binding Converter={StaticResource nullToCollapsed}}">

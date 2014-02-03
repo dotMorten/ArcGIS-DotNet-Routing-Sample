@@ -32,35 +32,36 @@
 		</Grid>
 
 		<Grid Grid.Row="1">
-		<Grid x:Uid="MapPanel" Grid.Column="1" >
-			<esri:Map LocationDisplay="{Binding LocationDisplay}"
+			<Grid x:Uid="MapPanel" Grid.Column="1" >
+				<esri:MapView LocationDisplay="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
-
-				<layers:ArcGISTiledMapServiceLayer
+					<esri:Map>
+						<layers:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
-				<layers:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
-					<layers:GraphicsLayer.Renderer>
-						<symbology:SimpleRenderer>
-							<symbology:SimpleMarkerSymbol Size="20" Color="Transparent" >
-								<symbology:SimpleMarkerSymbol.Outline>
-									<symbology:SimpleLineSymbol Color="Green" Width="5" />
-								</symbology:SimpleMarkerSymbol.Outline>
-							</symbology:SimpleMarkerSymbol>
-						</symbology:SimpleRenderer>
-					</layers:GraphicsLayer.Renderer>
-				</layers:GraphicsLayer>
+						<layers:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
+							<layers:GraphicsLayer.Renderer>
+								<symbology:SimpleRenderer>
+									<symbology:SimpleMarkerSymbol Size="20" Color="Transparent" >
+										<symbology:SimpleMarkerSymbol.Outline>
+											<symbology:SimpleLineSymbol Color="Green" Width="5" />
+										</symbology:SimpleMarkerSymbol.Outline>
+									</symbology:SimpleMarkerSymbol>
+								</symbology:SimpleRenderer>
+							</layers:GraphicsLayer.Renderer>
+						</layers:GraphicsLayer>
 
-				<layers:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
-					<layers:GraphicsLayer.Renderer>
-						<symbology:SimpleRenderer>
-							<symbology:SimpleLineSymbol Width="10" Color="#99A0A0FF" />
-						</symbology:SimpleRenderer>
-					</layers:GraphicsLayer.Renderer>
-				</layers:GraphicsLayer>
+						<layers:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
+							<layers:GraphicsLayer.Renderer>
+								<symbology:SimpleRenderer>
+									<symbology:SimpleLineSymbol Width="10" Color="#99A0A0FF" />
+								</symbology:SimpleRenderer>
+							</layers:GraphicsLayer.Renderer>
+						</layers:GraphicsLayer>
 
-			</esri:Map>
-		</Grid>
+					</esri:Map>
+				</esri:MapView>
+			</Grid>
 
 			<!--Create Route Panel-->
 			<Border Margin="20" HorizontalAlignment="Right" VerticalAlignment="Top"

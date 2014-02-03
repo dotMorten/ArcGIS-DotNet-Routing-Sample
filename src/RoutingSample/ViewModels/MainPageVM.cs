@@ -102,7 +102,7 @@ namespace RoutingSample.ViewModels
 		}
 
 		/// <summary>
-		/// Used for requesting an extent for the map to ZoomTo
+		/// Used for requesting an extent for the mapView to ZoomTo
 		/// </summary>
 		public Envelope ExtentRequested
 		{
@@ -115,7 +115,7 @@ namespace RoutingSample.ViewModels
 		}
 
 		/// <summary>
-		/// The current location display used for displaying location on the map
+		/// The current location display used for displaying location on the mapView
 		/// </summary>
 		public LocationDisplay LocationDisplay
 		{

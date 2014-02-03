@@ -77,33 +77,33 @@
         </StackPanel>
 
         <Grid x:Name="MapPanel" Grid.Column="1" Grid.Row="1">
-            <esri:Map LocationDisplay="{Binding LocationDisplay}"
+            <esri:MapView LocationDisplay="{Binding LocationDisplay}"
 					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
-
-                <esri:ArcGISTiledMapServiceLayer
+				<esri:Map>
+					<esri:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
-                <esri:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
-                    <esri:GraphicsLayer.Renderer>
-                        <esri:SimpleRenderer>
-                            <esri:SimpleMarkerSymbol Size="20" Color="Transparent" >
-                                <esri:SimpleMarkerSymbol.Outline>
-                                    <esri:SimpleLineSymbol Color="Green" Width="5" />
-                                </esri:SimpleMarkerSymbol.Outline>
-                            </esri:SimpleMarkerSymbol>
-                        </esri:SimpleRenderer>
-                    </esri:GraphicsLayer.Renderer>
-                </esri:GraphicsLayer>
+					<esri:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
+						<esri:GraphicsLayer.Renderer>
+							<esri:SimpleRenderer>
+								<esri:SimpleMarkerSymbol Size="20" Color="Transparent" >
+									<esri:SimpleMarkerSymbol.Outline>
+										<esri:SimpleLineSymbol Color="Green" Width="5" />
+									</esri:SimpleMarkerSymbol.Outline>
+								</esri:SimpleMarkerSymbol>
+							</esri:SimpleRenderer>
+						</esri:GraphicsLayer.Renderer>
+					</esri:GraphicsLayer>
 
-                <esri:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
-                    <esri:GraphicsLayer.Renderer>
-                        <esri:SimpleRenderer>
-                            <esri:SimpleLineSymbol Width="10" Color="#99A0A0FF" />
-                        </esri:SimpleRenderer>
-                    </esri:GraphicsLayer.Renderer>
-                </esri:GraphicsLayer>
-
-            </esri:Map>
+					<esri:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
+						<esri:GraphicsLayer.Renderer>
+							<esri:SimpleRenderer>
+								<esri:SimpleLineSymbol Width="10" Color="#99A0A0FF" />
+							</esri:SimpleRenderer>
+						</esri:GraphicsLayer.Renderer>
+					</esri:GraphicsLayer>
+				</esri:Map>
+			</esri:MapView>
         </Grid>
 
     </Grid>

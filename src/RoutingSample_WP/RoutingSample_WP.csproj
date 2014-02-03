@@ -162,7 +162,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="ESRI.ArcGISRuntime, Version=10.2.1.0">
+    <SDKReference Include="ESRI.ArcGISRuntime, Version=10.2.2.0">
       <Name>ArcGIS Runtime for Windows Phone %28Beta%29</Name>
     </SDKReference>
   </ItemGroup>
