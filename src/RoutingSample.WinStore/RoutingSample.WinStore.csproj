@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D0B4439-0B01-45F3-B844-9B2A79684A79}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RoutingSample</RootNamespace>
+    <AssemblyName>RoutingSample</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>RoutingSample_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
+    <TargetFrameworkVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\RoutingSample.Shared\CommandBinder.cs">
+      <Link>CommandBinder.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Converters\NullToCollapsedConverter.cs">
+      <Link>Converters\NullToCollapsedConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Models\ModelBase.cs">
+      <Link>Models\ModelBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Models\RouteDataSource.cs">
+      <Link>Models\RouteDataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Models\RouteService.cs">
+      <Link>Models\RouteService.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\RouteLocationSimulator.cs">
+      <Link>RouteLocationSimulator.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\ViewModels\MainPageVM.cs">
+      <Link>ViewModels\MainPageVM.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="RoutingSample_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AppSketch.png" />
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\BearLeft.png">
+      <Link>Assets\Maneuvers\BearLeft.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\BearRight.png">
+      <Link>Assets\Maneuvers\BearRight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\ForkLeft.png">
+      <Link>Assets\Maneuvers\ForkLeft.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\ForkRight.png">
+      <Link>Assets\Maneuvers\ForkRight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\HighwayMerge.png">
+      <Link>Assets\Maneuvers\HighwayMerge.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\RampLeft.png">
+      <Link>Assets\Maneuvers\RampLeft.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\RampRight.png">
+      <Link>Assets\Maneuvers\RampRight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\Roundabout .png">
+      <Link>Assets\Maneuvers\Roundabout .png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\Stop.png">
+      <Link>Assets\Maneuvers\Stop.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\Straight.png">
+      <Link>Assets\Maneuvers\Straight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\TurnLeft.png">
+      <Link>Assets\Maneuvers\TurnLeft.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\TurnRight.png">
+      <Link>Assets\Maneuvers\TurnRight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\UTurn.png">
+      <Link>Assets\Maneuvers\UTurn.png</Link>
+    </Content>
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="ESRI.ArcGISRuntime, Version=10.2.2.0">
+      <Name>ArcGIS Runtime for Windows Store apps %28Beta%29</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows</Name>
+    </SDKReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <SDKReferenceDirectoryRoot>C:\applications\output\winrt_sdk\;$(SDKReferenceDirectoryRoot)</SDKReferenceDirectoryRoot>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

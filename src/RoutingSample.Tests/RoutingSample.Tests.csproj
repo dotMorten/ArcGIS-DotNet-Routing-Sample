@@ -146,9 +146,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RoutingSample\RoutingSample.csproj">
+    <ProjectReference Include="..\RoutingSample.WinStore\RoutingSample.WinStore.csproj">
       <Project>{2d0b4439-0b01-45f3-b844-9b2a79684a79}</Project>
-      <Name>RoutingSample</Name>
+      <Name>RoutingSample.WinStore</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
