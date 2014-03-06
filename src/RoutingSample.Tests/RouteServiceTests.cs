@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using RoutingSample.Models;
 using System.Threading;
 using System.Threading.Tasks;
-using ESRI.ArcGIS.Runtime;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace RoutingSample.Tests
 {
@@ -30,8 +30,8 @@ namespace RoutingSample.Tests
 		{
 			var testHandler = TestMessageHandler.FromResourceResponse("RouteFrom1172_34ToRedlandsCA");
 			var result = await new RouteService(testHandler).GetRoute(
-				new MapPoint(-117.2, 34) { SpatialReference = SpatialReference.Wgs84 },
-				new MapPoint(-117.18253721699972, 34.055566969000438) { SpatialReference = SpatialReference.Wgs84 },
+				new MapPoint(-117.2, 34) { SpatialReference = SpatialReferences.Wgs84 },
+				new MapPoint(-117.18253721699972, 34.055566969000438) { SpatialReference = SpatialReferences.Wgs84 },
 				CancellationToken.None);
 			Assert.IsNotNull(result);
 			

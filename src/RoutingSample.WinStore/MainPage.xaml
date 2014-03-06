@@ -1,0 +1,104 @@
+﻿<Page
+    x:Class="RoutingSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RoutingSample"
+	xmlns:esri="using:Esri.ArcGISRuntime.Controls"
+	xmlns:layers="using:Esri.ArcGISRuntime.Layers"
+	xmlns:symbology="using:Esri.ArcGISRuntime.Symbology"
+	xmlns:vm="using:RoutingSample.ViewModels">
+	<Page.Resources>
+		<vm:MainPageVM x:Key="viewmodel" />
+	</Page.Resources>
+	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+			  DataContext="{StaticResource viewmodel}">
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+			
+							<!--Route Details Panel-->
+		<Grid Visibility="{Binding Route, Converter={StaticResource nullToCollapsed}}">
+			<TextBlock Text="{Binding Route.NextManeuver}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
+			<Image Source="{Binding Route.ManeuverImage}" HorizontalAlignment="Left" Height="50" Margin="20,10,0,10" />
+			<TextBlock Text="{Binding RouteCalculationErrorMessage}" Foreground="Red" FontWeight="Bold" IsHitTestVisible="False"
+					   VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+			<Grid.Transitions>
+				<TransitionCollection>
+					<EdgeUIThemeTransition Edge="Top" />
+				</TransitionCollection>
+			</Grid.Transitions>
+		</Grid>
+
+		<Grid Grid.Row="1">
+			<Grid x:Uid="MapPanel" Grid.Column="1" >
+				<esri:MapView LocationDisplay="{Binding LocationDisplay}"
+					  local:CommandBinder.ZoomTo="{Binding ExtentRequested}" >
+					<esri:Map>
+						<layers:ArcGISTiledMapServiceLayer
+					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
+
+						<layers:GraphicsLayer GraphicsSource="{Binding Route.Maneuvers, Source={StaticResource viewmodel}}">
+							<layers:GraphicsLayer.Renderer>
+								<symbology:SimpleRenderer>
+									<symbology:SimpleMarkerSymbol Size="20" Color="Transparent" >
+										<symbology:SimpleMarkerSymbol.Outline>
+											<symbology:SimpleLineSymbol Color="Green" Width="5" />
+										</symbology:SimpleMarkerSymbol.Outline>
+									</symbology:SimpleMarkerSymbol>
+								</symbology:SimpleRenderer>
+							</layers:GraphicsLayer.Renderer>
+						</layers:GraphicsLayer>
+
+						<layers:GraphicsLayer GraphicsSource="{Binding Route.RouteLines, Source={StaticResource viewmodel}}">
+							<layers:GraphicsLayer.Renderer>
+								<symbology:SimpleRenderer>
+									<symbology:SimpleLineSymbol Width="10" Color="#99A0A0FF" />
+								</symbology:SimpleRenderer>
+							</layers:GraphicsLayer.Renderer>
+						</layers:GraphicsLayer>
+
+					</esri:Map>
+				</esri:MapView>
+			</Grid>
+
+			<!--Create Route Panel-->
+			<Border Margin="20" HorizontalAlignment="Right" VerticalAlignment="Top"
+					Background="#55000000" Padding="5">
+				<StackPanel>
+					<SearchBox PlaceholderText="Enter destination" SearchHistoryEnabled="True"  QueryText="{Binding RouteToAddress, Mode=TwoWay}" Width="200" />
+						<ProgressBar IsIndeterminate="{Binding IsCalculatingRoute}" Margin="0,0,0,-5" />
+				</StackPanel>
+			</Border>
+		
+			<Border VerticalAlignment="Bottom" Margin="100,0,100,0" Background="#55000000" Padding="5"
+					Visibility="{Binding Route, Converter={StaticResource nullToCollapsed}}">
+			<Grid >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<StackPanel>
+					<TextBlock Text="Time to waypoint:" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.TimeToWaypoint}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+				<StackPanel Grid.Column="1">
+					<TextBlock Text="Distance to waypoint:" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.MilesToWaypoint}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+				<StackPanel Grid.Column="2">
+					<TextBlock Text="Time to destination:" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.TimeToDestination}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+				<StackPanel Grid.Column="3">
+					<TextBlock Text="Distance to destination" HorizontalAlignment="Center" />
+					<TextBlock Text="{Binding Route.MilesToDestination}" FontSize="24" HorizontalAlignment="Center" />
+				</StackPanel>
+			</Grid>
+			</Border>
+		</Grid>
+	</Grid>
+</Page>

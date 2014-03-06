@@ -4,38 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2E3FDFA4-CD8F-4032-998B-F49E7C826C88}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2D0B4439-0B01-45F3-B844-9B2A79684A79}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RoutingSample.Tests</RootNamespace>
-    <AssemblyName>RoutingSample.Tests</AssemblyName>
+    <RootNamespace>RoutingSample</RootNamespace>
+    <AssemblyName>RoutingSample</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>RoutingSample.Tests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>RoutingSample_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <TargetFrameworkVersion />
-    <AppxBundle>Never</AppxBundle>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -103,53 +84,110 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <AppXPackage>True</AppXPackage>
-    <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
-  </PropertyGroup>
   <ItemGroup>
-    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
-    <SDKReference Include="Esri.ArcGISRuntime, Version=10.2.2.0">
-      <Name>ArcGIS Runtime for Windows Store apps %28Beta%29</Name>
-    </SDKReference>
-    <SDKReference Include="Microsoft.VCLibs, Version=12.0">
-      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows</Name>
-    </SDKReference>
-    <SDKReference Include="MSTestFramework, Version=11.0" />
-    <SDKReference Include="TestPlatform, Version=11.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="RouteDataSourceTests.cs" />
-    <Compile Include="TestMessageHandler.cs" />
-    <Compile Include="RouteServiceTests.cs" />
+    <Compile Include="..\RoutingSample.Shared\CommandBinder.cs">
+      <Link>CommandBinder.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Converters\NullToCollapsedConverter.cs">
+      <Link>Converters\NullToCollapsedConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Models\ModelBase.cs">
+      <Link>Models\ModelBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Models\RouteDataSource.cs">
+      <Link>Models\RouteDataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\Models\RouteService.cs">
+      <Link>Models\RouteService.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\RouteLocationSimulator.cs">
+      <Link>RouteLocationSimulator.cs</Link>
+    </Compile>
+    <Compile Include="..\RoutingSample.Shared\ViewModels\MainPageVM.cs">
+      <Link>ViewModels\MainPageVM.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="RoutingSample.Tests_TemporaryKey.pfx" />
-    <PRIResource Include="TestResponses.resw" />
+    <None Include="RoutingSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\UnitTestLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="AppSketch.png" />
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\BearLeft.png">
+      <Link>Assets\Maneuvers\BearLeft.png</Link>
     </Content>
-    <Content Include="Images\UnitTestSmallLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\BearRight.png">
+      <Link>Assets\Maneuvers\BearRight.png</Link>
     </Content>
-    <Content Include="Images\UnitTestSplashScreen.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\ForkLeft.png">
+      <Link>Assets\Maneuvers\ForkLeft.png</Link>
     </Content>
-    <Content Include="Images\UnitTestStoreLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\ForkRight.png">
+      <Link>Assets\Maneuvers\ForkRight.png</Link>
     </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\HighwayMerge.png">
+      <Link>Assets\Maneuvers\HighwayMerge.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\RampLeft.png">
+      <Link>Assets\Maneuvers\RampLeft.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\RampRight.png">
+      <Link>Assets\Maneuvers\RampRight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\Roundabout .png">
+      <Link>Assets\Maneuvers\Roundabout .png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\Stop.png">
+      <Link>Assets\Maneuvers\Stop.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\Straight.png">
+      <Link>Assets\Maneuvers\Straight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\TurnLeft.png">
+      <Link>Assets\Maneuvers\TurnLeft.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\TurnRight.png">
+      <Link>Assets\Maneuvers\TurnRight.png</Link>
+    </Content>
+    <Content Include="..\RoutingSample.Shared\Assets\Maneuvers\UTurn.png">
+      <Link>Assets\Maneuvers\UTurn.png</Link>
+    </Content>
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RoutingSample.WinStore\RoutingSample.WinStore.csproj">
-      <Project>{2d0b4439-0b01-45f3-b844-9b2a79684a79}</Project>
-      <Name>RoutingSample.WinStore</Name>
-    </ProjectReference>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="ESRI.ArcGISRuntime, Version=10.2.2.0">
+      <Name>ArcGIS Runtime for Windows Store apps %28Beta%29</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
@@ -161,7 +199,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>  
+  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
