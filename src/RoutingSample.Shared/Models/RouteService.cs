@@ -34,12 +34,12 @@ namespace RoutingSample.Models
 
 		public async Task<MapPoint> Geocode(string address, CancellationToken cancellationToken)
 		{
-			LocatorTask locator = new OnlineLocatorTask(new Uri(locatorService), null)
+			OnlineLocatorTask locator = new OnlineLocatorTask(new Uri(locatorService), null)
 				 { HttpMessageHandler = messageHandler };
-			var result = await locator.FindAsync(new OnlineLocatorFindParameters() { Text =  address },
+			var result = await locator.FindAsync(new OnlineLocatorFindParameters(address),
 				cancellationToken).ConfigureAwait(false);
 			if (result != null && result.Count > 0)
-				return result.First().Location as MapPoint;
+				return result.First().Feature.Geometry as MapPoint;
 			return null;
 		}
 
